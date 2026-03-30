@@ -72,6 +72,7 @@
   .request-card {
     background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px;
     cursor: default; transition: all 0.3s; position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
   }
   .request-card:hover { border-color: var(--border-hover); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
   .request-card.highlighted { border-color: var(--accent); background: linear-gradient(135deg, rgba(14,165,233,0.08), rgba(6,182,212,0.04)); cursor: pointer; }
@@ -81,10 +82,10 @@
   .source-agent { background: rgba(167,139,250,0.12); color: #A78BFA; }
   .source-transcript { background: rgba(74,222,128,0.12); color: #4ADE80; }
   .source-email { background: rgba(251,146,60,0.12); color: #FB923C; }
-  .request-dept { font-size: 11px; color: var(--text-muted); margin-bottom: 5px; font-weight: 500; }
-  .request-text { font-size: 13px; color: var(--text); line-height: 1.55; }
-  .request-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
-  .request-tag { font-size: 10px; padding: 2px 8px; border-radius: 5px; background: rgba(14,165,233,0.08); color: var(--accent); font-weight: 500; border: 1px solid rgba(14,165,233,0.08); }
+  .request-text { font-size: 13px; color: var(--text); line-height: 1.55; margin-bottom: 12px; }
+  .request-footer { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: auto; }
+  .request-dept { font-size: 11px; color: var(--accent); font-weight: 600; background: rgba(14,165,233,0.08); padding: 2px 8px; border-radius: 5px; border: 1px solid rgba(14,165,233,0.1); white-space: nowrap; }
+  .request-person { font-size: 11px; color: var(--text-muted); font-weight: 500; text-align: right; }
 
   .chaos-count {
     text-align: center; margin-top: 40px; padding: 22px 30px;
@@ -197,6 +198,8 @@
 
   @media (max-width: 768px) {
     .evidence-grid { grid-template-columns: 1fr; }
+    .unpack-trio { grid-template-columns: 1fr; }
+    .unpack-part2 { grid-template-columns: 1fr; }
   }
 
   /* Decision Path CTA */
@@ -548,17 +551,67 @@
 
   /* RESPONSIVE */
   @media (max-width: 768px) {
-    .nav { padding: 0 12px; height: 56px; }
-    .nav-tabs { overflow-x: auto; gap: 2px; }
-    .nav-tab { padding: 6px 10px; font-size: 11px; }
-    .section { padding: 72px 16px 40px; }
-    .section-title { font-size: 26px; }
+    /* Nav */
+    .nav { padding: 0 12px; height: auto; flex-direction: column; align-items: flex-start; gap: 0; }
+    .nav-brand { padding: 12px 0 8px; font-size: 16px; }
+    .nav-tabs { width: 100%; overflow-x: auto; gap: 2px; padding: 0 0 10px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .nav-tabs::-webkit-scrollbar { display: none; }
+    .nav-tab { padding: 6px 12px; font-size: 11px; white-space: nowrap; flex-shrink: 0; }
+
+    /* Sections */
+    .section { padding: 130px 16px 48px; }
+    .section-title { font-size: 24px; letter-spacing: -0.3px; }
+    .section-desc { font-size: 14px; }
+
+    /* Capture */
+    .capture-container { max-width: 100%; }
+    .capture-source-row { gap: 8px; }
+    .capture-source-pill { font-size: 11px; padding: 6px 12px; }
+    .capture-quote { font-size: 17px; padding-left: 14px; }
+    .capture-meta { gap: 10px; font-size: 12px; }
+    .capture-log-row { flex-wrap: wrap; gap: 8px; }
+
+    /* Chaos grid */
+    .requests-grid { grid-template-columns: 1fr; }
+
+    /* Cluster matrix — hide on mobile, too wide */
+    .cluster-matrix-wrap { display: none; }
+    .cluster-toggle { margin-bottom: 16px; }
+    .clusters-container { grid-template-columns: 1fr; }
+    .cluster-stats { gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .cluster-stat .num { font-size: 24px; }
+    .cluster-summary { padding: 24px 20px; border-radius: 14px; }
+
+    /* Unpack */
     .unpack-trio { grid-template-columns: 1fr; }
     .unpack-part2 { grid-template-columns: 1fr; }
-    .clusters-container { grid-template-columns: 1fr; }
-    .requests-grid { grid-template-columns: 1fr; }
-    .cluster-stats { gap: 20px; flex-wrap: wrap; }
+    .evidence-grid { grid-template-columns: 1fr; }
+    .original-request .quote { font-size: 16px; }
+    .decision-next { font-size: 14px; padding: 18px 20px; }
+
+    /* Decision Path */
     .dp-timeline { display: none; }
+    .dp-container { max-width: 100%; }
+    .dp-phase-title { font-size: 15px; }
+    .dp-chips { gap: 6px; }
+
+    /* In Motion */
+    .motion-grid { grid-template-columns: 1fr; }
+    .motion-container { max-width: 100%; }
+    .slack-messages { max-height: 400px; }
+    .slack-mock { border-radius: 10px; }
+    .capture-quote { font-size: 16px; }
+
+    /* Stakeholder map */
+    .stakeholder-map { gap: 6px; }
+    .unpack-divider-text { font-size: 13px; padding: 6px 14px; }
+
+    /* Structured output */
+    .output-field { flex-direction: column; align-items: flex-start; gap: 2px; }
+    .output-value { text-align: left; max-width: 100%; }
+
+    /* Conn cards */
+    .conn-summary { padding: 14px; }
   }
 
   ::-webkit-scrollbar { width: 8px; }
@@ -703,8 +756,15 @@
   .dp-live-timeline { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted); margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(148,163,184,0.06); }
   .dp-live-timeline-dot { width: 6px; height: 6px; border-radius: 50%; }
 
-  @media (max-width: 768px) {
-    .motion-grid { grid-template-columns: 1fr; }
+  @media (max-width: 480px) {
+    .section-title { font-size: 20px; }
+    .capture-quote { font-size: 15px; }
+    .nav-tab { padding: 5px 10px; font-size: 10px; }
+    .cluster-stats { gap: 12px; }
+    .dp-phase-header { padding: 14px 16px; }
+    .dp-phase-content { padding: 0 16px 16px; }
+    .slack-msg-text { font-size: 12px; }
+    .slack-artifact-desc { font-size: 11px; }
   }
 </style>
 </head>
@@ -895,7 +955,20 @@
     </div>
 
     <!-- Evidence & Sources -->
-    <div class="evidence-panel">
+    <div class="dp-phase open" style="margin-bottom:14px;">
+      <div class="dp-phase-header" onclick="togglePhase(this)">
+        <div class="dp-phase-header-left">
+          <div class="dp-phase-badge" style="background:linear-gradient(135deg,#8B5CF6,#6D28D9);">1</div>
+          <div>
+            <div class="dp-phase-title">Evidence & Sources</div>
+            <div class="dp-phase-meta"><span class="meta-pill">6 sources</span><span class="meta-pill">Slack · Transcript · Document · Meeting · Report · AI Interview</span></div>
+          </div>
+        </div>
+        <svg class="dp-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="dp-phase-body">
+        <div class="dp-phase-content" style="padding-top:16px;">
+    <div class="evidence-panel" style="margin-top:0; border:none; padding:0; background:transparent;">
       <div class="evidence-title">Evidence & Sources</div>
       <div class="evidence-grid">
         <div class="evidence-item">
@@ -959,12 +1032,28 @@
           <span class="evidence-badge" style="background: rgba(239,68,68,0.1); color: #EF4444;">Report</span>
         </div>
       </div>
+        </div>
+      </div>
+    </div>
     </div>
 
     <!-- 3-column breakdown -->
+    <div class="dp-phase open" style="margin-bottom:14px;">
+      <div class="dp-phase-header" onclick="togglePhase(this)">
+        <div class="dp-phase-header-left">
+          <div class="dp-phase-badge phase-bg-teal">2</div>
+          <div>
+            <div class="dp-phase-title">Intent Analysis</div>
+            <div class="dp-phase-meta"><span class="meta-pill">Real problem · Current state · Success criteria</span></div>
+          </div>
+        </div>
+        <svg class="dp-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="dp-phase-body">
+        <div class="dp-phase-content" style="padding-top:16px;">
     <div class="unpack-trio">
       <div class="unpack-step step-teal">
-        <h3>THE REAL PROBLEM</h3>
+        <h3>01 — THE REAL PROBLEM</h3>
         <h4>What's actually hurting?</h4>
         <ul>
           <li>Not "AI agents" — the pain is AP processing speed and error rate</li>
@@ -976,7 +1065,7 @@
       </div>
 
       <div class="unpack-step step-cyan">
-        <h3>CURRENT STATE</h3>
+        <h3>02 — CURRENT STATE</h3>
         <h4>What exists today?</h4>
         <ul>
           <li>SAP + manual Excel reconciliation</li>
@@ -988,7 +1077,7 @@
       </div>
 
       <div class="unpack-step step-green">
-        <h3>SUCCESS LOOKS LIKE</h3>
+        <h3>03 — SUCCESS LOOKS LIKE</h3>
         <h4>How do we know it's solved?</h4>
         <ul>
           <li>Processing time &lt;1 day (from 4.2)</li>
@@ -997,6 +1086,9 @@
           <li>ROI within 12 months</li>
           <li>AP team capacity freed for exceptions</li>
         </ul>
+      </div>
+    </div>
+        </div>
       </div>
     </div>
 
@@ -1008,6 +1100,19 @@
     </div>
 
     <!-- ===== Connections + Decision Card ===== -->
+    <div class="dp-phase open" style="margin-bottom:14px;">
+      <div class="dp-phase-header" onclick="togglePhase(this)">
+        <div class="dp-phase-header-left">
+          <div class="dp-phase-badge phase-bg-green">3</div>
+          <div>
+            <div class="dp-phase-title">Connections & Decision Card</div>
+            <div class="dp-phase-meta"><span class="meta-pill">1 duplicate · 5 related · 2 dependencies</span><span class="meta-pill">Stakeholder map</span></div>
+          </div>
+        </div>
+        <svg class="dp-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="dp-phase-body">
+        <div class="dp-phase-content" style="padding-top:16px;">
     <div class="unpack-part2">
       <!-- LEFT: Connections -->
       <div class="connections-panel">
@@ -1113,6 +1218,9 @@
               <span class="stakeholder approve">CTO — if core system</span>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
         </div>
       </div>
     </div>
@@ -1751,34 +1859,34 @@
 <script>
 // ===== DATA =====
 const requests = [
-  { text: "We need to automate our applicant tracking process", dept: "HR", source: "people", tags: ["automation","HR"] },
-  { text: "Can we explore using AI agents to improve invoicing?", dept: "Operations", source: "people", tags: ["AI","automation","finance"] },
-  { text: "Our CRM is too expensive — should we switch?", dept: "Sales", source: "email", tags: ["vendor","CRM","cost"] },
-  { text: "3 teams are using different project management tools", dept: "IT", source: "transcript", tags: ["consolidation","tools"] },
-  { text: "We should build our own analytics dashboard instead of paying Looker", dept: "Data", source: "people", tags: ["build-vs-buy","analytics"] },
-  { text: "Need to evaluate cybersecurity vendors — our contract expires in 60 days", dept: "IT Security", source: "email", tags: ["vendor","security","urgent"] },
-  { text: "The marketing team wants to adopt a new CDP platform", dept: "Marketing", source: "people", tags: ["vendor","martech"] },
-  { text: "Can we consolidate our 3 cloud storage providers?", dept: "IT", source: "agent", tags: ["consolidation","cloud"] },
-  { text: "We need a new contract management system", dept: "Legal", source: "people", tags: ["vendor","legal"] },
-  { text: "Should we outsource payroll or keep it in-house?", dept: "Finance", source: "transcript", tags: ["build-vs-buy","HR"] },
-  { text: "Agent detected: 4 overlapping SaaS subscriptions in marketing", dept: "AI Agent", source: "agent", tags: ["consolidation","SaaS","waste"] },
-  { text: "Engineering wants to switch from Jenkins to GitHub Actions", dept: "Engineering", source: "people", tags: ["vendor","DevOps"] },
-  { text: "Our customer support tool doesn't integrate with the new CRM", dept: "Support", source: "people", tags: ["integration","tools"] },
-  { text: "We're paying for Tableau but most teams use Google Sheets", dept: "Finance", source: "agent", tags: ["consolidation","analytics","waste"] },
-  { text: "Need to evaluate RPA tools for accounts payable", dept: "Operations", source: "people", tags: ["automation","finance","vendor"] },
-  { text: "The onboarding workflow takes 3 weeks — can we automate it?", dept: "HR", source: "transcript", tags: ["automation","HR","process"] },
-  { text: "Should we adopt Copilot across the organisation?", dept: "IT", source: "people", tags: ["AI","vendor","org-wide"] },
-  { text: "Our testing framework is blocking release cycles", dept: "QA", source: "people", tags: ["vendor","DevOps","urgent"] },
-  { text: "Agent flagged: compliance training platform unused for 6 months", dept: "AI Agent", source: "agent", tags: ["waste","compliance"] },
-  { text: "Can we replace our legacy ERP module for inventory?", dept: "Supply Chain", source: "people", tags: ["vendor","ERP","legacy"] },
-  { text: "Marketing and Sales use different definitions of 'qualified lead'", dept: "RevOps", source: "transcript", tags: ["process","alignment"] },
-  { text: "Need to decide: hire 2 more SDRs or invest in outbound automation", dept: "Sales", source: "people", tags: ["build-vs-buy","hiring"] },
-  { text: "IT helpdesk tickets have doubled — should we deploy an AI chatbot?", dept: "IT", source: "people", tags: ["AI","automation","support"] },
-  { text: "Our data warehouse costs have tripled in 12 months", dept: "Data", source: "agent", tags: ["cost","cloud","optimisation"] },
-  { text: "The legal team still reviews NDAs manually — 40 hrs/week", dept: "Legal", source: "transcript", tags: ["automation","legal","process"] },
-  { text: "Should we move from Slack to Teams to save on licensing?", dept: "IT", source: "email", tags: ["vendor","consolidation","cost"] },
-  { text: "We need a vendor for penetration testing — annual requirement", dept: "Security", source: "people", tags: ["vendor","security","compliance"] },
-  { text: "Agent recommendation: consolidate 2 CRM instances into 1", dept: "AI Agent", source: "agent", tags: ["consolidation","CRM"] },
+  { text: "We need to automate our applicant tracking process", dept: "HR", source: "people", person: "HR Director", level: "Director" },
+  { text: "Can we explore using AI agents to improve invoicing?", dept: "Operations", source: "people", person: "Ops Director", level: "Director" },
+  { text: "Our CRM is too expensive — should we switch?", dept: "Sales", source: "email", person: "VP Sales", level: "VP" },
+  { text: "3 teams are using different project management tools", dept: "IT", source: "transcript", person: "IT Manager", level: "Manager" },
+  { text: "We should build our own analytics dashboard instead of paying Looker", dept: "Data", source: "people", person: "Head of Data", level: "Head of" },
+  { text: "Need to evaluate cybersecurity vendors — our contract expires in 60 days", dept: "IT Security", source: "email", person: "CISO", level: "C-Suite" },
+  { text: "The marketing team wants to adopt a new CDP platform", dept: "Marketing", source: "people", person: "CMO", level: "C-Suite" },
+  { text: "Can we consolidate our 3 cloud storage providers?", dept: "IT", source: "agent", person: "AI Agent", level: "Agent" },
+  { text: "We need a new contract management system", dept: "Legal", source: "people", person: "General Counsel", level: "VP" },
+  { text: "Should we outsource payroll or keep it in-house?", dept: "Finance", source: "transcript", person: "CFO", level: "C-Suite" },
+  { text: "Agent detected: 4 overlapping SaaS subscriptions in marketing", dept: "Marketing", source: "agent", person: "AI Agent", level: "Agent" },
+  { text: "Engineering wants to switch from Jenkins to GitHub Actions", dept: "Engineering", source: "people", person: "VP Engineering", level: "VP" },
+  { text: "Our customer support tool doesn't integrate with the new CRM", dept: "Support", source: "people", person: "Support Lead", level: "Manager" },
+  { text: "We're paying for Tableau but most teams use Google Sheets", dept: "Finance", source: "agent", person: "AI Agent", level: "Agent" },
+  { text: "Need to evaluate RPA tools for accounts payable", dept: "Operations", source: "people", person: "Ops Manager", level: "Manager" },
+  { text: "The onboarding workflow takes 3 weeks — can we automate it?", dept: "HR", source: "transcript", person: "HR Manager", level: "Manager" },
+  { text: "Should we adopt Copilot across the organisation?", dept: "IT", source: "people", person: "CTO", level: "C-Suite" },
+  { text: "Our testing framework is blocking release cycles", dept: "QA", source: "people", person: "QA Lead", level: "Manager" },
+  { text: "Agent flagged: compliance training platform unused for 6 months", dept: "Compliance", source: "agent", person: "AI Agent", level: "Agent" },
+  { text: "Can we replace our legacy ERP module for inventory?", dept: "Supply Chain", source: "people", person: "Supply Chain Director", level: "Director" },
+  { text: "Marketing and Sales use different definitions of 'qualified lead'", dept: "RevOps", source: "transcript", person: "RevOps Manager", level: "Manager" },
+  { text: "Need to decide: hire 2 more SDRs or invest in outbound automation", dept: "Sales", source: "people", person: "Sales Director", level: "Director" },
+  { text: "IT helpdesk tickets have doubled — should we deploy an AI chatbot?", dept: "IT", source: "people", person: "IT Director", level: "Director" },
+  { text: "Our data warehouse costs have tripled in 12 months", dept: "Data", source: "agent", person: "AI Agent", level: "Agent" },
+  { text: "The legal team still reviews NDAs manually — 40 hrs/week", dept: "Legal", source: "transcript", person: "Legal Ops Manager", level: "Manager" },
+  { text: "Should we move from Slack to Teams to save on licensing?", dept: "IT", source: "email", person: "CTO", level: "C-Suite" },
+  { text: "We need a vendor for penetration testing — annual requirement", dept: "Security", source: "people", person: "CISO", level: "C-Suite" },
+  { text: "Agent recommendation: consolidate 2 CRM instances into 1", dept: "Sales", source: "agent", person: "AI Agent", level: "Agent" },
 ];
 
 const sourceLabels = { people: "PEOPLE", agent: "AI AGENT", transcript: "TRANSCRIPT", email: "EMAIL" };
@@ -1791,9 +1899,11 @@ requests.forEach((r, i) => {
   card.className = 'request-card' + (i === 1 ? ' highlighted' : '');
   card.innerHTML = `
     <span class="request-source ${sourceClasses[r.source]}">${sourceLabels[r.source]}</span>
-    <div class="request-dept">${r.dept}</div>
     <div class="request-text">${r.text}</div>
-    <div class="request-tags">${r.tags.map(t => '<span class="request-tag">' + t + '</span>').join('')}</div>
+    <div class="request-footer">
+      <span class="request-dept">${r.dept}</span>
+      <span class="request-person">${r.person}</span>
+    </div>
   `;
   if (i === 1) card.onclick = () => showSection(3);
   grid.appendChild(card);
